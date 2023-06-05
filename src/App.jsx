@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Maquetado from "./components/Maquetado";
+import Noticias from "./components/Noticias";
 
 function App() {
+  const [pais, setPais] = useState("us");
   const [categoria, setCategoria] = useState("general");
   const [noticias, setNoticias] = useState([]);
 
@@ -9,7 +11,7 @@ function App() {
     const obtenerNoticias = async () => {
       try {
         const apiKey = "c38f9e4109d64ccf9cb1348ca22f400e";
-        const url = `https://newsapi.org/v2/top-headlines?country=us&category=${categoria}&apiKey=${apiKey}`;
+        const url = `https://newsapi.org/v2/top-headlines?country=${pais}&category=${categoria}&apiKey=${apiKey}`;
         const respuesta = await fetch(url);
         const datos = await respuesta.json();
         setNoticias(datos.articles);
@@ -19,15 +21,25 @@ function App() {
     };
 
     obtenerNoticias();
-  }, [categoria]);
+  }, [pais, categoria]);
 
-  const handleConsultarAPI = (categoriaSeleccionada) => {
+  const handleConsultarAPI = (paisSeleccionado, categoriaSeleccionada) => {
+    setPais(paisSeleccionado);
     setCategoria(categoriaSeleccionada);
   };
 
   return (
     <>
-      <Maquetado consultarAPI={handleConsultarAPI} noticias={noticias} />
+      <h1 className="text-center mt-4 mb-4">Noticias</h1>
+      <hr />
+      <Maquetado consultarAPI={handleConsultarAPI} />
+      <Noticias noticias={noticias} />
+      <footer>
+        <p className="text-center">
+          {" "}
+          Creado por Agustin Baza - RollingCode School
+        </p>
+      </footer>
     </>
   );
 }

@@ -1,46 +1,48 @@
 import React from "react";
+import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import "./Maquetado.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Noticias from "./Noticias";
 
-const Maquetado = ({ consultarAPI, noticias }) => {
+const Maquetado = ({ consultarAPI }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
-    const categoriaSeleccionada = event.target.categoria.value;
-    consultarAPI(categoriaSeleccionada);
+    const pais = event.target.elements.pais.value;
+    const categoria = event.target.elements.categoria.value;
+    consultarAPI(pais, categoria);
   };
 
   return (
-    <section>
-      <h1 className="text-center mt-4">Noticias</h1>
-      <hr />
-      <article className="orden">
-        <div className="d-flex justify-content-evenly align-items-center mt-5 mb-5 espaciado">
-          <h2 className="">Buscar por categoría:</h2>
-          <div className="ordenBoton">
-            <form onSubmit={handleSubmit}>
-              <select className="input" name="categoria">
-                <option value="general">General</option>
-                <option value="sports">Deportes</option>
-                <option value="entertainment">Entretenimiento</option>
-                <option value="technology">Tecnología</option>
-              </select>
-              <button type="submit" className="btn btn-dark">
+    <>
+      <Container className="orden">
+        <Row>
+          <Col>
+            <h1 className="text-center mb-5">Selecciona país y categoría:</h1>
+            <hr />
+            <Form onSubmit={handleSubmit}>
+              <Form.Group controlId="pais" className="input">
+                <Form.Control as="select">
+                  <option value="ar">Argentina</option>
+                  <option value="us">Estados Unidos</option>
+                  <option value="gb">Reino Unido</option>
+                  <option value="ca">Canadá</option>
+                </Form.Control>
+              </Form.Group>
+              <Form.Group controlId="categoria">
+                <Form.Control as="select">
+                  <option value="general">General</option>
+                  <option value="sports">Deportes</option>
+                  <option value="entertainment">Entretenimiento</option>
+                  <option value="technology">Tecnología</option>
+                </Form.Control>
+              </Form.Group>
+              <Button className="btn btn-dark" type="submit" id="boton">
                 Buscar
-              </button>
-            </form>
-          </div>
-        </div>
-        <hr />
-        <Noticias noticias={noticias} />
-      </article>
-      <footer>
-        <p className="text-center">
-          {" "}
-          Creado por Agustin Baza - RollingCode School
-        </p>
-      </footer>
-    </section>
+              </Button>
+            </Form>
+          </Col>
+        </Row>
+      </Container>
+    </>
   );
 };
 
