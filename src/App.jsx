@@ -1,35 +1,47 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState, useEffect } from "react";
+import Maquetado from "./components/Maquetado";
+import Noticias from "./components/Noticias";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [pais, setPais] = useState("us");
+  const [categoria, setCategoria] = useState("general");
+  const [noticias, setNoticias] = useState([]);
+
+  useEffect(() => {
+    const obtenerNoticias = async () => {
+      try {
+        const apiKey = "c38f9e4109d64ccf9cb1348ca22f400e";
+        const url = `https://newsapi.org/v2/top-headlines?country=${pais}&category=${categoria}&apiKey=${apiKey}`;
+        const respuesta = await fetch(url);
+        const datos = await respuesta.json();
+        setNoticias(datos.articles);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    obtenerNoticias();
+  }, [pais, categoria]);
+
+  const handleConsultarAPI = (paisSeleccionado, categoriaSeleccionada) => {
+    setPais(paisSeleccionado);
+    setCategoria(categoriaSeleccionada);
+  };
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
+      <h1 className="text-center mt-4 mb-4">Noticias</h1>
+      <hr />
+      <Maquetado consultarAPI={handleConsultarAPI} />
+      <Noticias noticias={noticias} />
+      <footer>
+        <p className="text-center">
+          {" "}
+          Creado por Agustin Baza - RollingCode School
         </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      </footer>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
