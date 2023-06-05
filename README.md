@@ -13,7 +13,7 @@ Modifica la web anterior (ejercicio 11) permitiendo que el usuario seleccione el
 - Stack Overflow.
 - NewsApi.
 - Youtube.
-- 
+
 ## COMENTARIOS EXTRA 📌
 
 Los comentarios son referidos al ejercicio anterior, pero no esta de mas aclararlo nuevamente. Sobre este punto solo quiero avisar que algunas imagenes según el pais no me cargaban correctamente.
